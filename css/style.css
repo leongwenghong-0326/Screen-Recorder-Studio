@@ -1,0 +1,487 @@
+/* ==========================================================================
+   Screen Recorder Studio - Global Design Tokens & Base Styles
+   ========================================================================== */
+
+:root {
+  /* Color Palette - Premium Midnight & Vibrant Accents */
+  --bg-primary: #0a0d14;
+  --bg-secondary: #101623;
+  --bg-tertiary: #172033;
+  --bg-surface: rgba(22, 31, 50, 0.7);
+  --bg-surface-elevated: rgba(29, 41, 66, 0.85);
+  --bg-surface-hover: rgba(38, 54, 86, 0.9);
+  --bg-glass: rgba(16, 22, 35, 0.75);
+  --bg-glass-card: rgba(23, 32, 51, 0.6);
+  --bg-dock: rgba(14, 20, 32, 0.88);
+
+  /* Borders & Dividers */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.16);
+  --border-focus: rgba(99, 102, 241, 0.6);
+  --border-glow: rgba(99, 102, 241, 0.25);
+
+  /* Primary Accent: Indigo / Violet Gradient */
+  --accent-primary: #6366f1;
+  --accent-primary-hover: #4f46e5;
+  --accent-glow: rgba(99, 102, 241, 0.35);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.15) 100%);
+
+  /* State Colors */
+  --status-recording: #ef4444;
+  --status-recording-glow: rgba(239, 68, 68, 0.45);
+  --status-paused: #f59e0b;
+  --status-paused-glow: rgba(245, 158, 11, 0.4);
+  --status-ready: #10b981;
+  --status-ready-glow: rgba(16, 185, 129, 0.35);
+  --status-info: #3b82f6;
+
+  /* Typography Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #0a0d14;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+  --shadow-dock: 0 20px 48px rgba(0, 0, 0, 0.75), 0 0 1px 1px rgba(255, 255, 255, 0.1);
+  --shadow-glow: 0 0 25px var(--accent-glow);
+  --shadow-recording: 0 0 20px var(--status-recording-glow);
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", "Cascadia Code", "Fira Code", Consolas, Menlo, monospace;
+
+  /* Sizing & Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Background Atmospheric Glow */
+body::before {
+  content: "";
+  position: fixed;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Layout Container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* App Header */
+.app-header {
+  height: 68px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-glass);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--accent-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px var(--accent-glow);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.brand-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #ffffff 30%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-subtitle {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Header Status Center */
+.header-status-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-normal);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: all var(--transition-normal);
+}
+
+/* Status States */
+.status-badge.status-idle .status-dot {
+  background: var(--text-muted);
+}
+.status-badge.status-ready {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+}
+.status-badge.status-ready .status-dot {
+  background: var(--status-ready);
+  box-shadow: 0 0 8px var(--status-ready);
+}
+.status-badge.status-recording {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+.status-badge.status-recording .status-dot {
+  background: var(--status-recording);
+  box-shadow: 0 0 10px var(--status-recording);
+  animation: blink 1s infinite alternate;
+}
+.status-badge.status-paused {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+.status-badge.status-paused .status-dot {
+  background: var(--status-paused);
+  box-shadow: 0 0 8px var(--status-paused);
+}
+.status-badge.status-processing {
+  border-color: rgba(99, 102, 241, 0.4);
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+}
+.status-badge.status-processing .status-dot {
+  background: var(--accent-primary);
+  animation: spin 1s infinite linear;
+}
+
+.spec-badge {
+  font-size: 0.76rem;
+  font-family: var(--font-mono);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+/* Header Action Buttons */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Main Studio Stage */
+.studio-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px 100px;
+  max-width: 1540px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.stage-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: calc(100vh - 210px);
+  min-height: 380px;
+  background: #06090e;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.stage-wrapper.is-recording {
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: var(--shadow-lg), 0 0 25px rgba(239, 68, 68, 0.2);
+}
+
+.stage-wrapper.is-paused {
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: var(--shadow-lg), 0 0 25px rgba(245, 158, 11, 0.15);
+}
+
+/* Video Elements inside Stage */
+.stage-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent;
+  display: none;
+}
+
+.stage-video.active {
+  display: block;
+}
+
+/* Hidden Compositor Canvas */
+.stage-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: none;
+}
+
+.stage-canvas.active {
+  display: block;
+}
+
+/* Empty Stage Placeholder */
+.stage-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+  max-width: 520px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.empty-icon-box {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.08));
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-primary);
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.empty-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.empty-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Stage Overlays (Timer, Live Indicator, Audio Meter) */
+.stage-hud-overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.hud-timer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(10, 13, 20, 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-medium);
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #fff;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all var(--transition-normal);
+}
+
+.hud-timer-badge.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hud-recording-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--status-recording);
+  animation: blink 1s infinite alternate;
+}
+
+.hud-paused-badge {
+  display: none;
+  font-size: 0.75rem;
+  background: var(--status-paused);
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.hud-timer-badge.is-paused .hud-recording-dot {
+  background: var(--status-paused);
+  animation: none;
+}
+.hud-timer-badge.is-paused .hud-paused-badge {
+  display: inline-block;
+}
+
+/* Live Audio Visualizer Mini-Bar in Stage HUD */
+.hud-audio-meter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(10, 13, 20, 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all var(--transition-normal);
+}
+
+.hud-audio-meter.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.audio-bars-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 16px;
+}
+
+.audio-bar {
+  width: 3px;
+  height: 3px;
+  background: #34d399;
+  border-radius: 1px;
+  transition: height 60ms ease;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px var(--status-recording-glow); }
+  50% { box-shadow: 0 0 20px var(--status-recording-glow); }
+}
+
+@keyframes blink {
+  from { opacity: 1; }
+  to { opacity: 0.25; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
